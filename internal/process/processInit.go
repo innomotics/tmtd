@@ -17,10 +17,13 @@ limitations under the License.
 package process
 
 import (
+	"io"
 	"log"
 	"log/slog"
 	"strings"
 )
+
+const StreamPath = "///"
 
 type Processor struct {
 	extensions []Extension
@@ -28,6 +31,7 @@ type Processor struct {
 	foundTMStaff bool
 	VarMap       map[string]any
 	outputDir    string
+	outputWriter io.Writer
 	inputPath    []string
 	parent       *Processor
 	items        []*Processor
@@ -40,6 +44,16 @@ func NewProcessor(out string, in string, vars string) *Processor {
 	np := Processor{
 		outputDir: out,
 		items:     make([]*Processor, 0, 20)}
+	np.SetInputPath(in)
+	np.SetPlaceholderMap(vars)
+
+	return &np
+}
+func NewWriterProcessor(out io.Writer, in string, vars string) *Processor {
+	np := Processor{
+		outputDir:    StreamPath,
+		outputWriter: out,
+		items:        make([]*Processor, 0, 20)}
 	np.SetInputPath(in)
 	np.SetPlaceholderMap(vars)
 

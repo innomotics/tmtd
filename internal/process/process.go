@@ -19,6 +19,7 @@ package process
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"path/filepath"
@@ -193,6 +194,9 @@ func (p *Processor) Save() {
 	switch p.outputDir {
 	case "-":
 		fmt.Println(prt.String())
+	case StreamPath:
+		_, err := io.Copy(p.outputWriter, strings.NewReader(prt.String()))
+		check(err)
 	case "":
 	default:
 		err := os.MkdirAll(p.outputDir, 0777)
