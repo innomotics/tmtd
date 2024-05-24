@@ -16,11 +16,11 @@ limitations under the License.
 package cmd
 
 import (
+	"github.com/innomotics/tmtd/pkg"
 	"log/slog"
 	"slices"
 
-	"github.com/innomotics/tmtd/internal"
-	"github.com/innomotics/tmtd/internal/config"
+	"github.com/innomotics/tmtd/pkg/config"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -59,5 +59,5 @@ func preRunAll(cmd *cobra.Command, args []string) {
 		viper.SetDefault(config.KeyLogLevel, config.LogLevelOff)
 	}
 
-	internal.InitLogging()
+	pkg.InitLogging()
 }

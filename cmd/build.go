@@ -18,7 +18,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/innomotics/tmtd/internal/process"
+	"github.com/innomotics/tmtd/pkg/process"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )

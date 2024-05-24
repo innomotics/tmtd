@@ -16,7 +16,7 @@ limitations under the License.
 package cmd
 
 import (
-	"github.com/innomotics/tmtd/internal/process"
+	"github.com/innomotics/tmtd/pkg/process"
 	"github.com/spf13/cobra"
 )
 

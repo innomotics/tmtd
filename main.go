@@ -17,14 +17,14 @@ package main
 
 import (
 	"github.com/innomotics/tmtd/cmd"
-	"github.com/innomotics/tmtd/internal"
-	"github.com/innomotics/tmtd/internal/config"
+	"github.com/innomotics/tmtd/pkg"
+	"github.com/innomotics/tmtd/pkg/config"
 )
 
 func init() {
 	config.InitConfig()
 	config.InitViper()
-	internal.InitLogging()
+	pkg.InitLogging()
 }
 
 func main() {

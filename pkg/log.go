@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package internal
+package pkg
 
 import (
 	"io"
@@ -22,7 +22,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/innomotics/tmtd/internal/config"
+	"github.com/innomotics/tmtd/pkg/config"
 	"github.com/spf13/viper"
 )
 
