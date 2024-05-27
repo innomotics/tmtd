@@ -45,7 +45,7 @@ func NewProcessor(out string, in string, vars string) *Processor {
 		outputDir: out,
 		items:     make([]*Processor, 0, 20)}
 	np.SetInputPath(in)
-	np.SetPlaceholderMap(vars)
+	np.SetPlaceholderMapFile(vars)
 
 	return &np
 }
@@ -56,7 +56,7 @@ func NewWriterProcessor(out io.Writer, in string, vars string) *Processor {
 		outputWriter: out,
 		items:        make([]*Processor, 0, 20)}
 	np.SetInputPath(in)
-	np.SetPlaceholderMap(vars)
+	np.SetPlaceholderMapFile(vars)
 
 	return &np
 }
@@ -78,7 +78,7 @@ func (p *Processor) SetInputPath(searchPath string) {
 	p.inputPath = strings.Split(searchPath, ",")
 }
 
-func (p *Processor) SetPlaceholderMap(filename string) {
+func (p *Processor) SetPlaceholderMapFile(filename string) {
 	if filename != "" {
 		varMapAny, err := p.loadFile(filename)
 		if err != nil {
@@ -90,6 +90,12 @@ func (p *Processor) SetPlaceholderMap(filename string) {
 			log.Printf("varMapFile don't contain a map of values\n")
 			return
 		}
+		p.VarMap = varMap
+	}
+}
+
+func (p *Processor) SetPlaceholderMap(varMap map[string]any) {
+	if varMap != nil {
 		p.VarMap = varMap
 	}
 }
