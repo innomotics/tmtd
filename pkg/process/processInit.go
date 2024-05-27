@@ -50,13 +50,12 @@ func NewProcessor(out string, in string, vars string) *Processor {
 	return &np
 }
 
-func NewWriterProcessor(out io.Writer, in string, vars string) *Processor {
+func NewWriterProcessor(out io.Writer, in string) *Processor {
 	np := Processor{
 		outputDir:    StreamPath,
 		outputWriter: out,
 		items:        make([]*Processor, 0, 20)}
 	np.SetInputPath(in)
-	np.SetPlaceholderMapFile(vars)
 
 	return &np
 }
