@@ -235,8 +235,8 @@ func (p *Processor) insertTypeLink() {
 	linksAny, ok := destMap["links"]
 	links := linksAny.([]any)
 	if !ok {
-		links = make([]any, 0, 1)
-		destMap["links"] = links
+		destMap["links"] = make([]any, 0, 1)
+		return
 	}
 	typelink, _ := structToMap(Link{Rel: "type", Href: p.filename, Type: "application/tm+json"})
 	destMap["links"] = append(links, typelink)
