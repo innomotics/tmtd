@@ -64,6 +64,7 @@ func (p *Processor) loadFile(filename string) (data any, err error) {
 
 		if err := json.Unmarshal(content, &data); err != nil {
 			slog.Error(fmt.Sprintf("unable to read valid json from %s", testPath), "error", err)
+			return nil, err
 		}
 		slog.Info("load file", "path", filename)
 		return data, nil
@@ -215,16 +216,18 @@ func (p *Processor) extendAll() {
 		propSrc := srcMap["properties"].(map[string]any)
 		merge(propDest, propSrc, 0)
 	}
-	required, ok := p.data.(map[string]any)["tm:required"]
-	delete(p.data.(map[string]any), "tm:required")
-	if ok {
-		requiredArray := required.([]any)
-		for _, requiredElement := range requiredArray {
-			requiredString := requiredElement.(string)
-			requiredString = strings.Replace(requiredString, "#/", "$.", 1)
-			_, notFoundErr := jsonpath.Get(requiredString, p.data)
-			if notFoundErr != nil {
-				slog.Debug(fmt.Sprintf("Required %s", requiredString), "error", notFoundErr)
+	if p.data != nil {
+		required, ok := p.data.(map[string]any)["tm:required"]
+		delete(p.data.(map[string]any), "tm:required")
+		if ok {
+			requiredArray := required.([]any)
+			for _, requiredElement := range requiredArray {
+				requiredString := requiredElement.(string)
+				requiredString = strings.Replace(requiredString, "#/", "$.", 1)
+				_, notFoundErr := jsonpath.Get(requiredString, p.data)
+				if notFoundErr != nil {
+					slog.Debug(fmt.Sprintf("Required %s", requiredString), "error", notFoundErr)
+				}
 			}
 		}
 	}
